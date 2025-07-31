@@ -11,13 +11,13 @@ from CashFlow.models.Category import Category, get_category_by_id
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 
-class Expense(SQLModel, table=True):
+class Earning(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
-    transaction_date: date = Field(default_factory=datetime.date())
+    transaction_date: date = Field(default_factory=datetime.date)
     amount: float
     description = Optional[str] = None
 
-    category_id: Optional[int] = Field(default=1024, foreign_key='category.id')
+    category_id: Optional[int] = Field(foreign_key='category.id')
     category: Optional['Category'] = Relationship(back_populates='earnings')
 
 def create_earning(transaction_date: date, amount: float, category_id: int, description: Optional[str] = None) -> Optional[int]:
