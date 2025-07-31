@@ -13,11 +13,11 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(level
 
 class Expense(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
-    transaction_date: date = Field(default_factory=datetime.date())
+    transaction_date: date = Field(default_factory=datetime.date)
     amount: float
     description = Optional[str] = None
 
-    category_id: Optional[int] = Field(default=0, foreign_key='category.id')
+    category_id: Optional[int] = Field(foreign_key='category.id')
     category: Optional['Category'] = Relationship(back_populates='expenses')
 
 def create_expense(transaction_date: date, amount: float, category_id: int, description: Optional[str] = None) -> Optional[int]:
