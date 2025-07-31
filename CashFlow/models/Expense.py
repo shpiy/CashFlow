@@ -17,7 +17,7 @@ class Expense(SQLModel, table=True):
     amount: float
     description = Optional[str] = None
 
-    category_id: Optional[int] = Field(foreign_key='category.id')
+    category_id: int = Field(foreign_key='category.id', index=True)
     category: Optional['Category'] = Relationship(back_populates='expenses')
 
 def create_expense(transaction_date: date, amount: float, category_id: int, description: Optional[str] = None) -> Optional[int]:
